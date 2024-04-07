@@ -1,0 +1,35 @@
+@import "../variables";
+
+.btn {
+  padding: 4px 16px;
+  border-radius: 5px;
+  background-color: $white;
+  color: $blue;
+  font-size: 16px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+
+  &--outline {
+    border: 1px solid $white;
+    background-color: transparent;
+    color: $white;
+  }
+
+  &--navy {
+    background-color: $navy-blue;
+    color: $white;
+
+    &-outline {
+      border: 1px solid $navy-blue;
+      color: $navy-blue;
+      background-color: transparent;
+    }
+  }
+
+  &--dark-blue-outline {
+    border: 1px solid $text-blue;
+    color: $text-blue;
+    background-color: transparent;
+  }
+}
