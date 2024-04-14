@@ -14,12 +14,9 @@ import step1Icon from "../../assets/icon/step-1.svg";
 import step2Icon from "../../assets/icon/step-2.svg";
 import step3Icon from "../../assets/icon/step-3.svg";
 
-import Header from "../../components/Header";
-
 function Home() {
   return (
     <div className={styles.home}>
-      <Header />
       <div className={`${styles.hero}  ${styles.homeSection} container`}>
         <div className={styles.heroLeft}>
           <h1>Тарихты интерактивті және тартымды әдістермен үйреніңіз</h1>
