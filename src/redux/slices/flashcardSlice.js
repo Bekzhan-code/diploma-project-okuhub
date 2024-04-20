@@ -1,12 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-import axios from "axios";
+import axios from "../../axios.js";
 
 export const fetchFlashcards = createAsyncThunk(
   "flashcard/fetchFlashcards",
   async ({ grade, section }) => {
     const { data } = await axios.get(
-      `http://localhost:5000/api/v1/flashcards?grade=${grade}&section=${section}`
+      `/flashcards?grade=${grade}&section=${section}`
     );
     return data;
   }

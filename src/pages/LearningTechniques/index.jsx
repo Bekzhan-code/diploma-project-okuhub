@@ -9,14 +9,17 @@ import {
   Select,
 } from "@mui/material";
 import Flashcards from "../../components/Flashcards";
+import Quiz from "../../components/Quiz";
 
 import { fetchFlashcards } from "../../redux/slices/flashcardSlice";
+import { fetchQuiz } from "../../redux/slices/quizSlice";
 
 const LearningTechniques = () => {
   const dispatch = useDispatch();
   const { flashcardQuestions, totalCardsNum } = useSelector(
     (state) => state.flashcards
   );
+  const { quizQuestions } = useSelector((state) => state.quiz);
 
   const [grade, setGrade] = React.useState(6);
   const [section, setSection] = React.useState("Палеолит");
@@ -30,7 +33,7 @@ const LearningTechniques = () => {
       case 7:
         setSection("Түрік қағанаты");
         break;
-      case 7:
+      case 8:
         setSection("Қазақ-Жоңғар соғыстары");
         break;
       case 9:
@@ -49,8 +52,9 @@ const LearningTechniques = () => {
   };
 
   React.useEffect(() => {
-    dispatch(fetchFlashcards({ grade, section }));
-  }, [grade, section]);
+    if (method === "Флеш-карта") dispatch(fetchFlashcards({ grade, section }));
+    else if (method === "Тест") dispatch(fetchQuiz({ grade, section }));
+  }, [grade, section, method]);
 
   return (
     <Container
@@ -114,7 +118,7 @@ const LearningTechniques = () => {
 
         <Box sx={{ minWidth: 120 }}>
           <FormControl variant="standard" fullWidth>
-            <InputLabel>Grade</InputLabel>
+            <InputLabel>Method</InputLabel>
             <Select value={method} label="Method" onChange={onChangeMethod}>
               <MenuItem value="Флеш-карта">Флеш-карта</MenuItem>
               <MenuItem value="Тест">Тест</MenuItem>
@@ -122,10 +126,14 @@ const LearningTechniques = () => {
           </FormControl>
         </Box>
       </Container>
-      <Flashcards
-        questions={flashcardQuestions}
-        totalCardsNum={totalCardsNum}
-      />
+      {method === "Флеш-карта" ? (
+        <Flashcards
+          questions={flashcardQuestions}
+          totalCardsNum={totalCardsNum}
+        />
+      ) : (
+        <Quiz questions={quizQuestions} />
+      )}
     </Container>
   );
 };

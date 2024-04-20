@@ -1,13 +1,16 @@
 import React from "react";
 import styles from "./Header.module.scss";
+import { Link } from "react-router-dom";
 
 function Header() {
   return (
     <div className={styles.header}>
-      <h2 className={styles.logo}>OkuHub</h2>
+      <Link to="/">
+        <h2 className={styles.logo}>OkuHub</h2>
+      </Link>
       <nav>
         <ul>
-          <li>
+          {/* <li>
             <a href="#">Флеш-карта</a>
           </li>
           <li>
@@ -15,16 +18,16 @@ function Header() {
           </li>
           <li>
             <a href="#">Тест</a>
-          </li>
+          </li> */}
           <li>
-            <a href="#">
+            <Link to="auth/login">
               <button className="btn">Кіру</button>
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="#">
+            <Link to="auth/sign-up">
               <button className="btn btn--outline">Тіркелу</button>
-            </a>
+            </Link>
           </li>
         </ul>
       </nav>

@@ -4,6 +4,8 @@ import "./scss/app.scss";
 import Home from "./pages/Home";
 import Header from "./components/Header";
 import LearningTechniques from "./pages/LearningTechniques";
+import LoginPage from "./pages/LoginPage";
+import SignUpPage from "./pages/SignUpPage";
 
 function App() {
   return (
@@ -12,6 +14,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/learning-techniques" element={<LearningTechniques />} />
+        <Route path="/auth/login" element={<LoginPage />} />
+        <Route path="/auth/sign-up" element={<SignUpPage />} />
       </Routes>
     </div>
   );

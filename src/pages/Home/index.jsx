@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import styles from "./Home.module.scss";
 
@@ -25,14 +26,21 @@ function Home() {
             зерттеудің жаңа әдісін ашыңыз.
           </p>
           <div>
-            <button className="btn btn--navy">Көбірек білу үшін</button>
-            <button className="btn btn--navy-outline">Бастау</button>
+            <a href="#flashcard-section">
+              <button className="btn btn--navy">Көбірек білу үшін</button>
+            </a>
+            <Link to="/auth/login">
+              <button className="btn btn--navy-outline">Бастау</button>
+            </Link>
           </div>
         </div>
         <img className={styles.heroRight} src={heroImg} alt="hero" />
       </div>
 
-      <div className={`${styles.section} ${styles.homeSection}`}>
+      <div
+        id="flashcard-section"
+        className={`${styles.section} ${styles.homeSection}`}
+      >
         <div className={`${styles.sectionContent} container`}>
           <img
             className={styles.sectionImg}
@@ -204,10 +212,14 @@ function Home() {
           </div>
 
           <div className={styles.stepsBtns}>
-            <button className="btn">Тіркелу</button>
-            <button className="btn btn--dark-blue-outline">
-              Менің аккаунтым бар
-            </button>
+            <Link to="/auth/sign-up">
+              <button className="btn">Тіркелу</button>
+            </Link>
+            <Link to="/auth/login">
+              <button className="btn btn--dark-blue-outline">
+                Менің аккаунтым бар
+              </button>
+            </Link>
           </div>
         </div>
       </div>
