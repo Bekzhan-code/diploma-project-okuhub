@@ -14,6 +14,21 @@ import Quiz from "../../components/Quiz";
 import { fetchFlashcards } from "../../redux/slices/flashcardSlice";
 import { fetchQuiz } from "../../redux/slices/quizSlice";
 
+const sectionsByGrade = {
+  6: ["Палеолит", "Мезолит", "Неолит"],
+  7: ["Түрік қағанаты", "Батыс Түрік қағанаты", "Шығыс Түрік қағанаты"],
+  8: [
+    "Қазақ-Жоңғар соғыстары",
+    "Кіші жүздің Ресейдің құрамына кіруі",
+    "Абылай хандығы",
+  ],
+  9: [
+    "1916 жылғы ұлт-азаттық көтеріліс",
+    "Қазақстандағы 1917 жылғы Ақпан, Қазан төңкерістері",
+    "Азамат соғысы жылдарындағы Қазақстан",
+  ],
+};
+
 const LearningTechniques = () => {
   const dispatch = useDispatch();
   const { flashcardQuestions, totalCardsNum } = useSelector(
@@ -86,32 +101,13 @@ const LearningTechniques = () => {
           <FormControl variant="standard" fullWidth>
             <InputLabel>Section</InputLabel>
             <Select value={section} label="Section" onChange={onChangeSection}>
-              <MenuItem value="Палеолит">Палеолит</MenuItem>
-              <MenuItem value="Мезолит">Мезолит</MenuItem>
-              <MenuItem value="Неолит">Неолит</MenuItem>
-              <MenuItem value="Түрік қағанаты">Түрік қағанаты</MenuItem>
-              <MenuItem value="Батыс Түрік қағанаты">
-                Батыс Түрік қағанаты
-              </MenuItem>
-              <MenuItem value="Шығыс Түрік қағанаты">
-                Шығыс Түрік қағанаты
-              </MenuItem>
-              <MenuItem value="Қазақ-Жоңғар соғыстары">
-                Қазақ-Жоңғар соғыстары
-              </MenuItem>
-              <MenuItem value="Кіші жүздің Ресейдің құрамына кіруі">
-                Кіші жүздің Ресейдің құрамына кіруі
-              </MenuItem>
-              <MenuItem value="Абылай хандығы">Абылай хандығы</MenuItem>
-              <MenuItem value="1916 жылғы ұлт-азаттық көтеріліс">
-                1916 жылғы ұлт-азаттық көтеріліс
-              </MenuItem>
-              <MenuItem value="Қазақстандағы 1917 жылғы Ақпан, Қазан төңкерістері">
-                Қазақстандағы 1917 жылғы Ақпан, Қазан төңкерістері
-              </MenuItem>
-              <MenuItem value="Азамат соғысы жылдарындағы Қазақстан">
-                Азамат соғысы жылдарындағы Қазақстан
-              </MenuItem>
+              {sectionsByGrade[grade].map(
+                (sectionMenuItem, sectionMenuIndex) => (
+                  <MenuItem key={sectionMenuIndex} value={sectionMenuItem}>
+                    {sectionMenuItem}
+                  </MenuItem>
+                )
+              )}
             </Select>
           </FormControl>
         </Box>
@@ -132,7 +128,7 @@ const LearningTechniques = () => {
           totalCardsNum={totalCardsNum}
         />
       ) : (
-        <Quiz questions={quizQuestions} />
+        <Quiz grade={grade} section={section} questions={quizQuestions} />
       )}
     </Container>
   );

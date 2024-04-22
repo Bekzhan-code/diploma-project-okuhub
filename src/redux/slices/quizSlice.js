@@ -23,6 +23,7 @@ export const quizSlice = createSlice({
   name: "quiz",
   initialState,
   extraReducers: (builder) => {
+    // get quiz
     builder.addCase(fetchQuiz.pending, (state) => {
       state.quizQuestions = [];
       state.status = "loading";

@@ -7,11 +7,16 @@ import {
   FormControlLabel,
   Box,
   Button,
+  Modal,
+  IconButton,
 } from "@mui/material";
+import { Close } from "@mui/icons-material";
+import { postUserAction } from "../../redux/slices/authSlice";
 
-const Quiz = ({ questions }) => {
+const Quiz = ({ grade, section, questions }) => {
   const [userAnswers, setUserAnswers] = React.useState({});
   const [isSubmitted, setIsSubmitted] = React.useState(false);
+  const [isOpenModal, setIsOpenModal] = React.useState(false);
 
   const onSelectVariant = (event, quesId) => {
     setUserAnswers({
@@ -20,11 +25,38 @@ const Quiz = ({ questions }) => {
     });
   };
 
+  const onPassAgain = () => {
+    setIsSubmitted(false);
+    window.scrollTo({ top: 0 });
+  };
+
+  const onCloseModal = () => {
+    setIsOpenModal(false);
+  };
+
   const handleSubmit = () => {
-    // Handle submission logic here
     setIsSubmitted(true);
-    // For demonstration purposes, log the answers
+
+    postUserAction({
+      grade,
+      section,
+      methodType: "Тест",
+      quizResult: countCorrectAnswers(),
+    });
+
+    setIsOpenModal(true);
+
+    console.log(countCorrectAnswers());
     console.log("Submitted answers:", userAnswers);
+  };
+
+  const countCorrectAnswers = () => {
+    let count = 0;
+    questions.forEach((q) => {
+      if (q.answer === userAnswers[q._id]) count++;
+    });
+
+    return count;
   };
 
   return (
@@ -63,15 +95,44 @@ const Quiz = ({ questions }) => {
         </div>
       ))}
       <Box textAlign="center">
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleSubmit}
-          disabled={isSubmitted}
-        >
-          Submit
-        </Button>
+        {isSubmitted ? (
+          <Button variant="contained" color="primary" onClick={onPassAgain}>
+            Қайта тапсыру
+          </Button>
+        ) : (
+          <Button variant="contained" color="primary" onClick={handleSubmit}>
+            Тапсыру
+          </Button>
+        )}
       </Box>
+      <Modal open={isOpenModal} onClose={onCloseModal}>
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 400,
+            bgcolor: "background.paper",
+            boxShadow: 24,
+            p: 4,
+          }}
+        >
+          <Typography id="modal-title" variant="h6" component="h2">
+            {section}
+          </Typography>
+          <IconButton
+            aria-label="close"
+            onClick={onCloseModal}
+            sx={{ position: "absolute", right: 0, top: 0 }}
+          >
+            <Close />
+          </IconButton>
+          <Typography id="modal-description" sx={{ mt: 2 }}>
+            Результаты теста: {countCorrectAnswers()}/10
+          </Typography>
+        </Box>
+      </Modal>
     </div>
   );
 };

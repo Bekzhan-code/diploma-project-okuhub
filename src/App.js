@@ -1,4 +1,6 @@
+import React from "react";
 import { Route, Routes } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import "./scss/app.scss";
 import Home from "./pages/Home";
@@ -7,8 +9,15 @@ import LearningTechniques from "./pages/LearningTechniques";
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
 import Footer from "./components/Footer";
+import { fetchGetMe } from "./redux/slices/authSlice";
 
 function App() {
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    dispatch(fetchGetMe());
+  }, []);
+
   return (
     <div className="App">
       <Header />
