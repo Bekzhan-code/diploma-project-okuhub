@@ -6,17 +6,21 @@ import Header from "./components/Header";
 import LearningTechniques from "./pages/LearningTechniques";
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
+import Footer from "./components/Footer";
 
 function App() {
   return (
     <div className="App">
       <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/learning-techniques" element={<LearningTechniques />} />
-        <Route path="/auth/login" element={<LoginPage />} />
-        <Route path="/auth/sign-up" element={<SignUpPage />} />
-      </Routes>
+      <div className="main-content">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/learning-techniques" element={<LearningTechniques />} />
+          <Route path="/auth/login" element={<LoginPage />} />
+          <Route path="/auth/sign-up" element={<SignUpPage />} />
+        </Routes>
+      </div>
+      <Footer />
     </div>
   );
 }

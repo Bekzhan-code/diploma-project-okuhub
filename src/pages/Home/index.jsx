@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import styles from "./Home.module.scss";
 
@@ -16,6 +17,8 @@ import step2Icon from "../../assets/icon/step-2.svg";
 import step3Icon from "../../assets/icon/step-3.svg";
 
 function Home() {
+  const { loggedIn } = useSelector((state) => state.auth);
+
   return (
     <div className={styles.home}>
       <div className={`${styles.hero}  ${styles.homeSection} container`}>
@@ -29,7 +32,7 @@ function Home() {
             <a href="#flashcard-section">
               <button className="btn btn--navy">Көбірек білу үшін</button>
             </a>
-            <Link to="/auth/login">
+            <Link to={loggedIn ? "/learning-techniques" : "/auth/login"}>
               <button className="btn btn--navy-outline">Бастау</button>
             </Link>
           </div>
@@ -212,10 +215,10 @@ function Home() {
           </div>
 
           <div className={styles.stepsBtns}>
-            <Link to="/auth/sign-up">
+            <Link to={loggedIn ? "/learning-techniques" : "/auth/login"}>
               <button className="btn">Тіркелу</button>
             </Link>
-            <Link to="/auth/login">
+            <Link to={loggedIn ? "/learning-techniques" : "/auth/login"}>
               <button className="btn btn--dark-blue-outline">
                 Менің аккаунтым бар
               </button>
