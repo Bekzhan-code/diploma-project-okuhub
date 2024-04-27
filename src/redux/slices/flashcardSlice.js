@@ -23,21 +23,6 @@ const initialState = {
 export const flashcardSlice = createSlice({
   name: "flashcards",
   initialState,
-  // extraReducers: {
-  //   [fetchFlashcards.pending]: (state) => {
-  //     state.flashcardQuestions = [];
-  //     state.status = "loading";
-  //   },
-  //   [fetchFlashcards.fulfilled]: (state, action) => {
-  //     state.flashcardQuestions = action.payload.questions;
-  //     state.totalCardsNum = action.payload.questions.length;
-  //     state.status = "success";
-  //   },
-  //   [fetchFlashcards.rejected]: (state) => {
-  //     state.flashcardQuestions = [];
-  //     state.status = "error";
-  //   },
-  // },
   extraReducers: (builder) => {
     builder.addCase(fetchFlashcards.pending, (state) => {
       state.flashcardQuestions = [];

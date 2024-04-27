@@ -21,15 +21,6 @@ function Header() {
       </Link>
       <nav>
         <ul>
-          {/* <li>
-            <a href="#">Флеш-карта</a>
-          </li>
-          <li>
-            <a href="#">Майнд-мап</a>
-          </li>
-          <li>
-            <a href="#">Тест</a>
-          </li> */}
           {loggedIn ? (
             <li>
               <button className="btn" onClick={onLogout}>

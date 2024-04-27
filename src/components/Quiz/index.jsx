@@ -45,9 +45,6 @@ const Quiz = ({ grade, section, questions }) => {
     });
 
     setIsOpenModal(true);
-
-    console.log(countCorrectAnswers());
-    console.log("Submitted answers:", userAnswers);
   };
 
   const countCorrectAnswers = () => {
