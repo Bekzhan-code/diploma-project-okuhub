@@ -9,6 +9,7 @@ import LearningTechniques from "./pages/LearningTechniques";
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
 import Footer from "./components/Footer";
+import UserPage from "./pages/UserPage";
 import { fetchGetMe } from "./redux/slices/authSlice";
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
           <Route path="/learning-techniques" element={<LearningTechniques />} />
           <Route path="/auth/login" element={<LoginPage />} />
           <Route path="/auth/sign-up" element={<SignUpPage />} />
+          <Route path="/user-page" element={<UserPage />} />
         </Routes>
       </div>
       <Footer />

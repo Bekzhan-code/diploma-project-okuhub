@@ -13,6 +13,7 @@ import Quiz from "../../components/Quiz";
 
 import { fetchFlashcards } from "../../redux/slices/flashcardSlice";
 import { fetchQuiz } from "../../redux/slices/quizSlice";
+import { fetchUserActions } from "../../redux/slices/userActionSlice";
 
 const sectionsByGrade = {
   6: ["Палеолит", "Мезолит", "Неолит"],
@@ -35,6 +36,7 @@ const LearningTechniques = () => {
     (state) => state.flashcards
   );
   const { quizQuestions } = useSelector((state) => state.quiz);
+  const { userActions } = useSelector((state) => state.userActions)
 
   const [grade, setGrade] = React.useState(6);
   const [section, setSection] = React.useState("Палеолит");
@@ -67,9 +69,15 @@ const LearningTechniques = () => {
   };
 
   React.useEffect(() => {
+    dispatch(fetchUserActions())
+  }, [])
+
+  React.useEffect(() => {
     if (method === "Флеш-карта") dispatch(fetchFlashcards({ grade, section }));
     else if (method === "Тест") dispatch(fetchQuiz({ grade, section }));
   }, [grade, section, method]);
+
+  
 
   return (
     <Container
@@ -124,8 +132,10 @@ const LearningTechniques = () => {
       </Container>
       {method === "Флеш-карта" ? (
         <Flashcards
+          grade={grade} section={section}
           questions={flashcardQuestions}
           totalCardsNum={totalCardsNum}
+          userActions={userActions}
         />
       ) : (
         <Quiz grade={grade} section={section} questions={quizQuestions} />

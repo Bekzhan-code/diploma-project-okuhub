@@ -9,9 +9,12 @@ import {
   Typography,
 } from "@mui/material";
 
-import { ArrowBack, ArrowForward, Check } from "@mui/icons-material";
+import { ArrowBack, ArrowForward, CheckCircle } from "@mui/icons-material";
+import { fetchUserActions, postUserAction } from "../../redux/slices/userActionSlice";
+import { useDispatch } from "react-redux";
 
-const Flashcards = ({ questions, totalCardsNum }) => {
+const Flashcards = ({ grade,section,questions, totalCardsNum, userActions }) => {
+  const dispatch = useDispatch()
   const [cardIndex, setCardIndex] = React.useState(1);
   const [toggleFlipcard, setToggleFlipcard] = React.useState(false);
 
@@ -20,7 +23,7 @@ const Flashcards = ({ questions, totalCardsNum }) => {
   };
 
   const handleNextCard = () => {
-    if (cardIndex < totalCardsNum && !toggleFlipcard) {
+    if (cardIndex < totalCardsNum) {
       setCardIndex(cardIndex + 1);
     }
   };
@@ -30,6 +33,19 @@ const Flashcards = ({ questions, totalCardsNum }) => {
       setCardIndex(cardIndex - 1);
     }
   };
+
+  const handleCardCheck = async () => {
+    postUserAction({
+      grade,
+      section,
+      methodType: "Флеш-карта",
+      flashcardNum: cardIndex
+    })
+
+    await new Promise(resolve => setTimeout(resolve, 500))
+
+    dispatch(fetchUserActions())
+  }
 
   React.useEffect(() => {
     setCardIndex(1);
@@ -72,13 +88,8 @@ const Flashcards = ({ questions, totalCardsNum }) => {
           <CardMedia
             sx={{
               height: "15%",
-              display: "flex",
-              justifyContent: "flex-end",
             }}
           >
-            <IconButton>
-              <Check />
-            </IconButton>
           </CardMedia>
           <CardContent
             sx={{
@@ -131,11 +142,12 @@ const Flashcards = ({ questions, totalCardsNum }) => {
             sx={{
               height: "15%",
               display: "flex",
-              justifyContent: "flex-end",
+              justifyContent: "space-between",
             }}
           >
-            <IconButton>
-              <Check />
+            <Typography sx={{p: '8px'}}>Жауабы</Typography>
+            <IconButton onClick={handleCardCheck}>
+              <CheckCircle color={userActions?.find(userAction => userAction.flashcardNum === questions[cardIndex-1]?.number) ? "success" : ""} />
             </IconButton>
           </CardMedia>
           <CardContent
@@ -173,7 +185,7 @@ const Flashcards = ({ questions, totalCardsNum }) => {
         </Card>
       </div>
     </div>
-  );
+  )
 };
 
 export default Flashcards;

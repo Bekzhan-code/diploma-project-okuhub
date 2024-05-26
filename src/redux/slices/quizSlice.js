@@ -30,9 +30,9 @@ export const quizSlice = createSlice({
     });
 
     builder.addCase(fetchQuiz.fulfilled, (state, action) => {
-      state.quizQuestions = action.payload[0].questions;
-      state.grade = action.payload[0].grade;
-      state.section = action.payload[0].section;
+      state.quizQuestions = action.payload.questions;
+      state.grade = action.payload.grade;
+      state.section = action.payload.section;
       state.status = "success";
     });
 

@@ -3,6 +3,7 @@ import styles from "./Header.module.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/slices/authSlice";
+import { AccountCircleRounded } from "@mui/icons-material";
 
 function Header() {
   const dispatch = useDispatch();
@@ -22,11 +23,18 @@ function Header() {
       <nav>
         <ul>
           {loggedIn ? (
+            <>
             <li>
               <button className="btn" onClick={onLogout}>
                 Шығу
               </button>
             </li>
+            <li>
+            <Link to="user-page">
+              <AccountCircleRounded />
+            </Link>
+          </li>
+          </>
           ) : (
             <>
               <li>

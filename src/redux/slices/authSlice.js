@@ -23,15 +23,6 @@ export const fetchSignUp = createAsyncThunk(
   }
 );
 
-export const postUserAction = async (params) => {
-  try {
-    const { data } = await axios.post(`/userActions`, params);
-
-    return data;
-  } catch (error) {
-    console.log(error);
-  }
-};
 
 const initialState = {
   userData: null,

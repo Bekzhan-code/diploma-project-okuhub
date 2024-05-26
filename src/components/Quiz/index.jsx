@@ -11,7 +11,7 @@ import {
   IconButton,
 } from "@mui/material";
 import { Close } from "@mui/icons-material";
-import { postUserAction } from "../../redux/slices/authSlice";
+import { postUserAction } from "../../redux/slices/userActionSlice";
 
 const Quiz = ({ grade, section, questions }) => {
   const [userAnswers, setUserAnswers] = React.useState({});
