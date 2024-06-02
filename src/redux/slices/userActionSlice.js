@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
+import { logout } from "./authSlice.js";
 import axios from "../../axios.js";
 
 export const fetchUserActions = createAsyncThunk(
@@ -69,6 +70,13 @@ export const userActionSlice = createSlice({
             state.userProgress = null;
             state.status = "error";
         });
+
+        // clear data when logged out
+        builder.addCase(logout,state => {
+            state.userActions = []
+            state.userProgress = []
+            state.status = "success"
+        })
     },
 });
 

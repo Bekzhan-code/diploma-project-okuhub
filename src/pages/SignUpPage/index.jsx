@@ -47,7 +47,7 @@ const SignUpPage = () => {
         window.alert("Не удалось зарегистрироваться. Повторите попытку позже");
       else {
         window.localStorage.setItem("token", data.payload.token);
-        navigate("/learning-techniques");
+        navigate("/");
       }
     }
   };

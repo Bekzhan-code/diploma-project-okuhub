@@ -1,4 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+
+import { logout } from "./authSlice.js";
 import axios from "../../axios.js";
 
 export const fetchQuiz = createAsyncThunk(
@@ -40,6 +42,14 @@ export const quizSlice = createSlice({
       state.quizQuestions = [];
       state.status = "error";
     });
+
+    // clear data when logged out
+    builder.addCase(logout,state => {
+      state.quizQuestions = []
+      state.grade = 0
+      state.section = ""
+      state.status = "success"
+  })
   },
 });
 

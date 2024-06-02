@@ -9,11 +9,19 @@ import {
   Button,
   Modal,
   IconButton,
+  CircularProgress,
 } from "@mui/material";
 import { Close } from "@mui/icons-material";
 import { postUserAction } from "../../redux/slices/userActionSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchQuiz } from "../../redux/slices/quizSlice";
+import LoadingPage from "../LoadingPage";
 
 const Quiz = ({ grade, section, questions }) => {
+  const dispatch = useDispatch()
+
+  const {status} = useSelector(state => state.quiz)
+
   const [userAnswers, setUserAnswers] = React.useState({});
   const [isSubmitted, setIsSubmitted] = React.useState(false);
   const [isOpenModal, setIsOpenModal] = React.useState(false);
@@ -27,6 +35,8 @@ const Quiz = ({ grade, section, questions }) => {
 
   const onPassAgain = () => {
     setIsSubmitted(false);
+    setUserAnswers({})
+    dispatch(fetchQuiz({grade,section}))
     window.scrollTo({ top: 0 });
   };
 
@@ -35,7 +45,8 @@ const Quiz = ({ grade, section, questions }) => {
   };
 
   const handleSubmit = () => {
-    setIsSubmitted(true);
+    if(Object.keys(userAnswers).length === 20) {
+      setIsSubmitted(true);
 
     postUserAction({
       grade,
@@ -45,7 +56,14 @@ const Quiz = ({ grade, section, questions }) => {
     });
 
     setIsOpenModal(true);
+    } else alert("Барлық сұрақтарға жауап беріңіз")
   };
+
+  const onGenerate = () => {
+    setUserAnswers({})
+    dispatch(fetchQuiz({grade,section}))
+    window.scrollTo({ top: 0 });
+  }
 
   const countCorrectAnswers = () => {
     let count = 0;
@@ -56,7 +74,13 @@ const Quiz = ({ grade, section, questions }) => {
     return count;
   };
 
+  React.useEffect(() => {
+    setIsSubmitted(false);
+    setUserAnswers({})
+  },[grade,section])
+
   return (
+    status === "loading" ? <LoadingPage/> : 
     <div style={{ marginBottom: "20px" }}>
       {questions.map((ques, qNum) => (
         <div key={ques._id}>
@@ -97,9 +121,14 @@ const Quiz = ({ grade, section, questions }) => {
             Қайта тапсыру
           </Button>
         ) : (
+          <div style={{display:"flex", justifyContent:"space-evenly"}}>
           <Button variant="contained" color="primary" onClick={handleSubmit}>
             Тапсыру
           </Button>
+          <Button variant="contained" color="primary" onClick={onGenerate}>
+            Басқа сұрақтар
+          </Button>
+          </div>
         )}
       </Box>
       <Modal open={isOpenModal} onClose={onCloseModal}>

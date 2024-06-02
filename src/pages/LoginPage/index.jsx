@@ -36,7 +36,7 @@ const LoginPage = () => {
   const onSubmit = async () => {
     const data = await dispatch(fetchLogin({ email, password }));
 
-    if (!data.payload) window.alert("Неправильный логин или пароль");
+    if (!data.payload) window.alert("Логин немесе құпиясөз қате");
     else {
       window.localStorage.setItem("token", data.payload.token);
       navigate("/learning-techniques");

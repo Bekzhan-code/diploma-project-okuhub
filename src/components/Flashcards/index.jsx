@@ -11,10 +11,14 @@ import {
 
 import { ArrowBack, ArrowForward, CheckCircle } from "@mui/icons-material";
 import { fetchUserActions, postUserAction } from "../../redux/slices/userActionSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import LoadingPage from "../LoadingPage";
 
 const Flashcards = ({ grade,section,questions, totalCardsNum, userActions }) => {
   const dispatch = useDispatch()
+
+  const {status} = useSelector(state => state.flashcards)
+
   const [cardIndex, setCardIndex] = React.useState(1);
   const [toggleFlipcard, setToggleFlipcard] = React.useState(false);
 
@@ -39,7 +43,7 @@ const Flashcards = ({ grade,section,questions, totalCardsNum, userActions }) => 
       grade,
       section,
       methodType: "Флеш-карта",
-      flashcardNum: cardIndex
+      flashcardNum: questions[cardIndex-1]?.number
     })
 
     await new Promise(resolve => setTimeout(resolve, 500))
@@ -52,7 +56,7 @@ const Flashcards = ({ grade,section,questions, totalCardsNum, userActions }) => 
     setToggleFlipcard(false);
   }, [questions]);
 
-  return (
+  return status === "loading" ? <LoadingPage/> : (
     <div
       style={{
         width: 600,

@@ -23,7 +23,6 @@ export const fetchSignUp = createAsyncThunk(
   }
 );
 
-
 const initialState = {
   userData: null,
   loggedIn: false,
@@ -35,7 +34,7 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     logout(state) {
-      state.data = null;
+      state.userData = null;
       state.loggedIn = false;
     },
   },
